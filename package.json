@@ -1,0 +1,10 @@
+{
+  "name": "actividad-2-lista-compras",
+  "version": "1.0.0",
+  "description": "Gestion de lista de compras con arreglos dinamicos",
+  "type": "module",
+  "main": "app.js",
+  "scripts": {
+    "start": "node app.js"
+  }
+}
