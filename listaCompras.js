@@ -1,9 +1,26 @@
-
 export const listaDeCompras = [];
 
+// Normaliza el texto eliminando espacios extremos y convirtiendo a minusculas
+const normalizar = (texto) => texto.trim().toLowerCase();
+
 export const agregarProducto = (producto) => {
-  listaDeCompras.push(producto);
-  console.log(`[AGREGADO] Producto añadido: "${producto}"`);
+  // Validacion de elemento vacio o tipo incorrecto
+  if (!producto || typeof producto !== 'string' || producto.trim() === '') {
+    console.warn('[AVISO] Producto inválido. No se puede agregar un elemento vacío.');
+    return false;
+  }
+
+  const productoLimpio = producto.trim();
+  // Comprobacion estricta contra elementos existentes
+  const existe = listaDeCompras.some((item) => normalizar(item) === normalizar(productoLimpio));
+
+  if (existe) {
+    console.warn(`[DUPLICADO] El producto "${productoLimpio}" ya se encuentra en la lista de compras.`);
+    return false;
+  }
+
+  listaDeCompras.push(productoLimpio);
+  console.log(`[AGREGADO] Producto añadido: "${productoLimpio}"`);
   return true;
 };
 
