@@ -57,3 +57,21 @@ export const mostrarLista = () => {
   console.log(`Total de artículos en la lista: ${listaDeCompras.length}`);
   console.log('========================================\n');
 };
+
+export const buscarProducto = (producto) => {
+  const indice = listaDeCompras.findIndex((item) => normalizar(item) === normalizar(producto));
+  const encontrado = indice !== -1;
+  
+  if (encontrado) {
+    console.log(`[BUSQUEDA] "${producto}" encontrado en la posición #${indice + 1}.`);
+  } else {
+    console.log(`[BUSQUEDA] "${producto}" no se encuentra en la lista.`);
+  }
+
+  return { existe: encontrado, posicion: encontrado ? indice + 1 : -1 };
+};
+
+export const vaciarLista = () => {
+  listaDeCompras.length = 0;
+  console.log('[INFO] La lista de compras ha sido vaciada por completo.');
+};
