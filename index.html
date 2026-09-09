@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Actividad 2 - Gestión de Lista de Compras</title>
+  <style>
+    :root {
+      --primary: #10b981;
+      --primary-dark: #059669;
+      --bg: #f8fafc;
+      --card: #ffffff;
+      --text: #1e293b;
+    }
+    body {
+      font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      margin: 0;
+      padding: 2rem;
+      display: flex;
+      justify-content: center;
+    }
+    .container {
+      max-width: 800px;
+      width: 100%;
+      background: var(--card);
+      padding: 2rem;
+      border-radius: 12px;
+      box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1);
+    }
+    h1 { color: var(--primary-dark); margin-top: 0; }
+    .badge {
+      background: #d1fae5;
+      color: #065f46;
+      padding: 0.25rem 0.75rem;
+      border-radius: 9999px;
+      font-size: 0.875rem;
+      font-weight: 600;
+      display: inline-block;
+      margin-bottom: 1rem;
+    }
+    .console-box {
+      background: #0f172a;
+      color: #4ade80;
+      font-family: 'Consolas', monospace;
+      padding: 1rem;
+      border-radius: 8px;
+      font-size: 0.9rem;
+      white-space: pre-wrap;
+      margin-top: 1.5rem;
+      max-height: 400px;
+      overflow-y: auto;
+    }
+    .info-card {
+      background: #f1f5f9;
+      border-left: 4px solid var(--primary);
+      padding: 1rem;
+      margin-bottom: 1.5rem;
+      border-radius: 0 8px 8px 0;
+    }
+    button {
+      background: var(--primary);
+      color: white;
+      border: none;
+      padding: 0.75rem 1.5rem;
+      font-size: 1rem;
+      font-weight: 600;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+    button:hover { background: var(--primary-dark); }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <span class="badge">Actividad 2 • Estructuras de Datos</span>
+    <h1>🛒 Lista de Compras Dinámica</h1>
+    <div class="info-card">
+      <p>Gestión de arreglos en JavaScript con prevención de duplicados, eliminación, búsquedas y visualización formateada.</p>
+    </div>
+
+    <button id="btnEjecutar">▶️ Ejecutar Demostración Completa</button>
+    <div class="console-box" id="output">Esperando ejecución...</div>
+  </div>
+
+  <script type="module">
+    import {
+      agregarProducto,
+      eliminarProducto,
+      mostrarLista,
+      buscarProducto,
+      vaciarLista
+    } from './listaCompras.js';
+
+    const output = document.getElementById('output');
+    const btn = document.getElementById('btnEjecutar');
+
+    btn.addEventListener('click', () => {
+      vaciarLista();
+      let logs = [];
+      const originalLog = console.log;
+      const originalWarn = console.warn;
+      console.log = (...args) => { logs.push(args.join(' ')); originalLog(...args); };
+      console.warn = (...args) => { logs.push('[ALERTA] ' + args.join(' ')); originalWarn(...args); };
+
+      console.log('--- 1. Agregando productos ---');
+      agregarProducto('Leche descremada');
+      agregarProducto('Huevos (docena)');
+      agregarProducto('Pan integral');
+      agregarProducto('Manzanas');
+      agregarProducto('Café en grano');
+
+      console.log('\n--- 2. Probando control de duplicados ---');
+      agregarProducto('leche descremada');
+      agregarProducto('Pan integral');
+
+      mostrarLista();
+
+      console.log('--- 3. Buscando productos ---');
+      buscarProducto('Manzanas');
+      buscarProducto('Queso parmesano');
+
+      console.log('\n--- 4. Eliminando productos ---');
+      eliminarProducto('Huevos (docena)');
+
+      mostrarLista();
+
+      console.log = originalLog;
+      console.warn = originalWarn;
+      output.textContent = logs.join('\n');
+    });
+
+    btn.click();
+  </script>
+</body>
+</html>
