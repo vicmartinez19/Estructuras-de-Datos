@@ -1,13 +1,44 @@
-import { agregarProducto, eliminarProducto, mostrarLista } from './listaCompras.js';
+import {
+  agregarProducto,
+  eliminarProducto,
+  mostrarLista,
+  buscarProducto,
+  vaciarLista
+} from './listaCompras.js';
 
-agregarProducto('Leche descremada');
-agregarProducto('Huevos (docena)');
-agregarProducto('Pan integral');
+const iniciarApp = () => {
+  console.log('==============================================');
+  console.log('   SISTEMA DE GESTION DE LISTA DE COMPRAS     ');
+  console.log('==============================================\n');
 
-mostrarLista();
+  mostrarLista();
 
-console.log('--- Probando eliminaciones ---');
-eliminarProducto('Huevos (docena)');
-eliminarProducto('Queso parmesano'); // Inexistente
+  console.log('--- 1. Agregando productos ---');
+  agregarProducto('Leche descremada');
+  agregarProducto('Huevos (docena)');
+  agregarProducto('Pan integral');
+  agregarProducto('Manzanas');
+  agregarProducto('Café en grano');
 
-mostrarLista();
+  console.log('\n--- 2. Probando control de duplicados ---');
+  agregarProducto('leche descremada');
+  agregarProducto('Pan integral');
+
+  mostrarLista();
+
+  console.log('--- 3. Buscando productos ---');
+  buscarProducto('Manzanas');
+  buscarProducto('Queso parmesano');
+
+  console.log('\n--- 4. Eliminando productos ---');
+  eliminarProducto('Huevos (docena)');
+  eliminarProducto('Queso parmesano');
+
+  mostrarLista();
+
+  console.log('--- 5. Vaciando lista ---');
+  vaciarLista();
+  mostrarLista();
+};
+
+iniciarApp();
