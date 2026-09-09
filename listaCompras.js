@@ -1,17 +1,15 @@
+
 export const listaDeCompras = [];
 
-// Normaliza el texto eliminando espacios extremos y convirtiendo a minusculas
 const normalizar = (texto) => texto.trim().toLowerCase();
 
 export const agregarProducto = (producto) => {
-  // Validacion de elemento vacio o tipo incorrecto
   if (!producto || typeof producto !== 'string' || producto.trim() === '') {
     console.warn('[AVISO] Producto inválido. No se puede agregar un elemento vacío.');
     return false;
   }
 
   const productoLimpio = producto.trim();
-  // Comprobacion estricta contra elementos existentes
   const existe = listaDeCompras.some((item) => normalizar(item) === normalizar(productoLimpio));
 
   if (existe) {
@@ -24,6 +22,22 @@ export const agregarProducto = (producto) => {
   return true;
 };
 
+export const eliminarProducto = (producto) => {
+  if (!producto || typeof producto !== 'string') return false;
+
+  const productoLimpio = producto.trim();
+  const indice = listaDeCompras.findIndex((item) => normalizar(item) === normalizar(productoLimpio));
+
+  if (indice === -1) {
+    console.warn(`[NO ENCONTRADO] No se pudo eliminar "${productoLimpio}" porque no está en la lista.`);
+    return false;
+  }
+
+  const [eliminado] = listaDeCompras.splice(indice, 1);
+  console.log(`[ELIMINADO] Producto eliminado exitosamente: "${eliminado}"`);
+  return true;
+};
+
 export const mostrarLista = () => {
   console.log('\n========================================');
   console.log('         LISTA DE COMPRAS ACTUAL        ');
@@ -31,11 +45,15 @@ export const mostrarLista = () => {
 
   if (listaDeCompras.length === 0) {
     console.log('La lista de compras está actualmente vacía.');
+    console.log('========================================\n');
     return;
   }
 
   listaDeCompras.forEach((item, index) => {
-    console.log(`  ${index + 1}. ${item}`);
+    console.log(`  ${index + 1}. [ ] ${item}`);
   });
+
+  console.log('----------------------------------------');
+  console.log(`Total de artículos en la lista: ${listaDeCompras.length}`);
   console.log('========================================\n');
 };

@@ -1,11 +1,13 @@
-import { agregarProducto, mostrarLista } from './listaCompras.js';
+import { agregarProducto, eliminarProducto, mostrarLista } from './listaCompras.js';
 
-console.log('--- 1. Agregando productos ---');
 agregarProducto('Leche descremada');
-agregarProducto('Huevos');
+agregarProducto('Huevos (docena)');
+agregarProducto('Pan integral');
 
-console.log('\n--- 2. Probando duplicados ---');
-agregarProducto('leche descremada'); // Debe avisar duplicado
-agregarProducto('   Huevos   ');     // Debe avisar duplicado
+mostrarLista();
+
+console.log('--- Probando eliminaciones ---');
+eliminarProducto('Huevos (docena)');
+eliminarProducto('Queso parmesano'); // Inexistente
 
 mostrarLista();
